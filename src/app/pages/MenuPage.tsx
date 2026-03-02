@@ -12,11 +12,11 @@ import { CheckoutModal } from "../components/CheckoutModal";
 
 // Categorize items
 const categories = [
-    "Snacks",
-    "Sandwich",
-    "Burger",
-    "Pizza",
     "Coffee",
+    "Snacks",
+    "Burger",
+    "Sandwich",
+    "Pizza",
     "Mocktail",
 ];
 

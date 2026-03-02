@@ -1,6 +1,11 @@
+import { useState } from "react";
 import { Instagram, Twitter, Facebook, Mail } from "lucide-react";
+import { Link } from "react-router-dom";
+import { ContactUsModal } from "./ContactUsModal";
 
 export function Footer() {
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+
   return (
     <footer id="footer" className="bg-[#2a1500] text-white py-14">
       <div className="max-w-7xl mx-auto px-6">
@@ -37,7 +42,15 @@ export function Footer() {
             <ul className="space-y-2">
               {["Our Story", "Full Menu", "Home Delivery", "Privacy Policy", "Contact Us"].map((link) => (
                 <li key={link}>
-                  <a href={link === "Full Menu" ? "/menu" : link === "Privacy Policy" ? "/privacy-policy" : "#"} className="text-white/60 hover:text-[#ECB159] transition-colors" style={{ fontSize: "0.88rem" }}>{link}</a>
+                  {link === "Full Menu" ? (
+                    <Link to="/menu" className="text-white/60 hover:text-[#ECB159] transition-colors" style={{ fontSize: "0.88rem" }}>{link}</Link>
+                  ) : link === "Privacy Policy" ? (
+                    <Link to="/privacy-policy" className="text-white/60 hover:text-[#ECB159] transition-colors" style={{ fontSize: "0.88rem" }}>{link}</Link>
+                  ) : link === "Contact Us" ? (
+                    <button onClick={() => setIsContactModalOpen(true)} className="text-white/60 hover:text-[#ECB159] transition-colors text-left" style={{ fontSize: "0.88rem" }}>{link}</button>
+                  ) : (
+                    <a href="#" className="text-white/60 hover:text-[#ECB159] transition-colors" style={{ fontSize: "0.88rem" }}>{link}</a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -49,12 +62,11 @@ export function Footer() {
             <ul className="space-y-2">
               {["Double Cheese Pizza", "Cold Coffee with Ice Cream", "Peri Peri Fries", "Schezwan Momos", "Paneer Cheese Grill Sandwich"].map((item) => (
                 <li key={item}>
-                  <a href="/menu" className="text-white/60 hover:text-[#ECB159] transition-colors" style={{ fontSize: "0.88rem" }}>{item}</a>
+                  <Link to="/menu" className="text-white/60 hover:text-[#ECB159] transition-colors" style={{ fontSize: "0.88rem" }}>{item}</Link>
                 </li>
               ))}
             </ul>
           </div>
-
 
         </div>
 
@@ -65,6 +77,8 @@ export function Footer() {
           </p>
         </div>
       </div>
+
+      <ContactUsModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
     </footer>
   );
 }

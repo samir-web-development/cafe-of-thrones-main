@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -6,8 +7,29 @@ interface AboutSectionProps {
   shopImage: string;
 }
 
+const INTERIOR_IMAGES = [
+  "/interior-images/cafe_of_thrones_1.jpeg",
+  "/interior-images/cafe_of_thrones_2.jpeg",
+  "/interior-images/cafe_of_thrones_3.jpeg",
+  "/interior-images/cafe_of_thrones_4.jpeg",
+  "/interior-images/cafe_of_thrones_5.jpeg",
+  "/interior-images/cafe_of_thrones_6.jpeg",
+  "/interior-images/cafe_of_thrones_7.jpeg",
+  "/interior-images/cafe_of_thrones__8.jpeg",
+  "/interior-images/cafe_of_thrones_9.jpeg",
+];
+
 export function AboutSection({ shopImage }: AboutSectionProps) {
   const navigate = useNavigate();
+  const [currentImgIndex, setCurrentImgIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImgIndex((prev) => (prev + 1) % INTERIOR_IMAGES.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section id="about" className="bg-[#f5ede0] relative overflow-hidden">
       {/* Decorative coffee cup SVGs */}
@@ -26,18 +48,17 @@ export function AboutSection({ shopImage }: AboutSectionProps) {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        {/* Image */}
+        {/* Image Carousel */}
         <div className="relative rounded-3xl overflow-hidden h-80 md:h-96 shadow-xl">
-          <ImageWithFallback
-            src={shopImage}
-            alt="Coffee shop interior"
-            className="w-full h-full object-cover"
-          />
-          {/* Overlay badge */}
-          <div className="absolute bottom-6 left-6 bg-white rounded-2xl p-4 shadow-lg">
-            <p className="text-[#ECB159]" style={{ fontWeight: 800, fontSize: "1.4rem" }}>New ✦</p>
-            <p className="text-[#7a5c3e]" style={{ fontSize: "0.78rem" }}>Est. 2024</p>
-          </div>
+          {INTERIOR_IMAGES.map((imgSrc, idx) => (
+            <ImageWithFallback
+              key={imgSrc}
+              src={imgSrc}
+              alt={`Coffee shop interior ${idx + 1}`}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-in-out ${idx === currentImgIndex ? "opacity-100 z-10" : "opacity-0 z-0"
+                }`}
+            />
+          ))}
         </div>
 
         {/* Text */}

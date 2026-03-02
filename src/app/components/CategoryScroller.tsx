@@ -10,9 +10,9 @@ const CATEGORIES: Category[] = [
     { name: "Coffee", emoji: "☕" },
     { name: "Snacks", emoji: "🍿" },
     { name: "Burger", emoji: "🍔" },
+    { name: "Sandwich", emoji: "🥪" },
     { name: "Pizza", emoji: "🍕" },
     { name: "Mocktail", emoji: "🥤" },
-    { name: "Sandwich", emoji: "🥪" },
 ];
 
 interface CategoryScrollerProps {
